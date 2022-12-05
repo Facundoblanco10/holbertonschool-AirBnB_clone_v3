@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""api"""
+"""app"""
 
 from flask import Flask
 from models import storage
