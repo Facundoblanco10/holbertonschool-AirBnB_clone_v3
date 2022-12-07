@@ -13,6 +13,7 @@ def status():
         }
     return(status)
 
+
 @app_views.route("/stats")
 def stats():
     stats = {}
