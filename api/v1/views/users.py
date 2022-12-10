@@ -39,10 +39,15 @@ def user_delete(user_id):
 def user_post():
     try:
         data = request.get_json()
-        if 'name' not in data:
-            return make_response(jsonify({'message': 'Missing name'}), 400)
+        if "email" not in data:
+            return make_response(
+                jsonify({'message': 'Missing email'}), 400)
+        if "password" not in data:
+            return make_response(
+                jsonify({'message': 'Missing password'}), 400)
         user = User()
-        user.name = data['name']
+        user.email = data['email']
+        user.password = data['password']
         storage.new(user)
         storage.save()
         return make_response(user.to_dict(), 201)
@@ -57,8 +62,12 @@ def user_update(user_id):
         users = storage.all(User).values()
         for user in users:
             if user.id == user_id:
-                if "name" in data:
-                    user.name = request.get_json()['name']
+                if "first_name" in data:
+                    user.first_name = request.get_json()['first_name']
+                if "last_name" in data:
+                    user.last_name = request.get_json()['last_name']
+                if "password" in data:
+                    user.password = request.get_json()['password']
                 storage.save()
                 return make_response(user.to_dict(), 200)
         return make_response(jsonify({'error': 'Not found'}), 404)
