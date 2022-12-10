@@ -39,7 +39,7 @@ def delete(state_id):
 def post():
     try:
         data = request.get_json()
-    except ValueError:
+    except Exception:
         return make_response(jsonify({'message': 'Not a JSON'}), 400)
     if not 'name' in data:
         return make_response(jsonify({'message': 'Missing name'}), 400)
@@ -51,11 +51,16 @@ def post():
 
 
 @app_views.route("/states/<state_id>", methods=['PUT'])
-def put(state_id):
+def update(state_id):
+    try:
+        data = request.get_json()
+    except Exception:
+        return make_response(jsonify({'message': 'Not a JSON'}), 400)
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
-            state.name = request.get_json()['name']
+            if "name" in data:
+                state.name = request.get_json()['name']
             storage.save()
             return make_response(state.to_dict(), 200)
     return make_response(jsonify({'error': 'Not found'}), 404)
