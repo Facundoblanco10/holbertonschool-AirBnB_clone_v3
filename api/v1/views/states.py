@@ -41,7 +41,7 @@ def post():
         data = request.get_json()
     except Exception:
         return make_response(jsonify({'message': 'Not a JSON'}), 400)
-    if not 'name' in data:
+    if 'name' not in data:
         return make_response(jsonify({'message': 'Missing name'}), 400)
     state = State()
     state.name = data['name']
