@@ -9,14 +9,14 @@ from models.state import State
 
 
 @app_views.route("/states")
-def index():
+def state_index():
     states = storage.all(State).values()
     states_list = list(map(lambda state: state.to_dict(), states))
     return (json.dumps(states_list))
 
 
 @app_views.route("/states/<state_id>")
-def get(state_id):
+def state_get(state_id):
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
@@ -25,7 +25,7 @@ def get(state_id):
 
 
 @app_views.route("/states/<state_id>", methods=['DELETE'])
-def delete(state_id):
+def state_delete(state_id):
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
@@ -36,7 +36,7 @@ def delete(state_id):
 
 
 @app_views.route("/states", methods=['POST'])
-def post():
+def state_post():
     try:
         data = request.get_json()
         if 'name' not in data:
@@ -51,7 +51,7 @@ def post():
 
 
 @app_views.route("/states/<state_id>", methods=['PUT'])
-def update(state_id):
+def state_update(state_id):
     try:
         data = request.get_json()
         states = storage.all(State).values()
