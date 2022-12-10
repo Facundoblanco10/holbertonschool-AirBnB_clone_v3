@@ -24,7 +24,7 @@ def amenity_get(amenity_id):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
-@app_views.route("/amenity/<amenity_id>", methods=['DELETE'])
+@app_views.route("/amenities/<amenity_id>", methods=['DELETE'])
 def amenity_delete(amenity_id):
     amenities = storage.all(Amenity).values()
     for amenity in amenities:
@@ -35,7 +35,7 @@ def amenity_delete(amenity_id):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
-@app_views.route("/amenity", methods=['POST'])
+@app_views.route("/amenities", methods=['POST'])
 def amenity_post():
     try:
         data = request.get_json()
@@ -50,7 +50,7 @@ def amenity_post():
         return make_response(jsonify({'message': 'Not a JSON'}), 400)
 
 
-@app_views.route("/amenity/<amenity_id>", methods=['PUT'])
+@app_views.route("/amenities/<amenity_id>", methods=['PUT'])
 def amenity_update(amenity_id):
     try:
         data = request.get_json()
