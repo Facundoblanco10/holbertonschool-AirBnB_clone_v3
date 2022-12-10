@@ -47,7 +47,8 @@ def city_post(state_id):
             try:
                 data = request.get_json()
                 if 'name' not in data:
-                    return make_response(jsonify({'message': 'Missing name'}), 400)
+                    return make_response(jsonify({'message': 'Missing name'}),
+                                         400)
                 city = City()
                 city.name = data['name']
                 city.state_id = state.id
