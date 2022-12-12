@@ -71,7 +71,7 @@ def place_post(city_id):
 def place_update(place_id):
     try:
         data = request.get_json()
-        places = storage.all(Places).values()
+        places = storage.all(Place).values()
         for place in places:
             if place.id == place_id:
                 if "name" in data:
