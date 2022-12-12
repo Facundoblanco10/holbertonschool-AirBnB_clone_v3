@@ -44,24 +44,23 @@ def place_post(city_id):
     cities = storage.all(City).values()
     for city in cities:
         if city.id == city_id:
-            data = None
             try:
                 data = request.get_json()
+                if 'name' not in data:
+                    return make_response(jsonify({'message': 'Missing name'}),
+                                            400)
+                if 'user_id' not in data:
+                    return make_response(jsonify({'message': 'Missing user_id'}),
+                                            400)
+                place = Place()
+                place.name = data['name']
+                place.user_id = data['user_id']
+                place.city_id = city.id
+                storage.new(place)
+                storage.save()
+                return make_response(place.to_dict(), 201)
             except Exception:
                 return make_response(jsonify({'message': 'Not a JSON'}), 400)
-            if 'name' not in data:
-                return make_response(jsonify({'message': 'Missing name'}),
-                                        400)
-            if 'user_id' not in data:
-                return make_response(jsonify({'message': 'Missing user_id'}),
-                                        400)
-            place = Place()
-            place.name = data['name']
-            place.user_id = data['user_id']
-            place.city_id = city.id
-            storage.new(place)
-            storage.save()
-            return make_response(place.to_dict(), 201)
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 

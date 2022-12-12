@@ -9,12 +9,9 @@ from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
-
-@cross_origin()
 
 
 @app.teardown_appcontext
