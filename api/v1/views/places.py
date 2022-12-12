@@ -58,13 +58,6 @@ def place_post(city_id):
             place = Place()
             place.name = data['name']
             place.user_id = data['user_id']
-            # place.description = data['description']
-            # place.number_rooms = data['number_rooms']
-            # place.number_bathrooms = data['number_bathrooms']
-            # place.max_guest = data['max_guest']
-            # place.price_by_night = data['price_by_night']
-            # place.latitude = data['latitude']
-            # place.longitude = data['longitude']
             place.city_id = city.id
             storage.new(place)
             storage.save()
