@@ -53,7 +53,7 @@ def place_post(city_id):
                 data = request.get_json()
                 if 'name' not in data:
                     return make_response(jsonify({'message': 'Missing name'}),
-                                            400)
+                                         400)
                 if 'user_id' not in data:
                     return make_response(
                         jsonify({'message': 'Missing user_id'}), 400)
