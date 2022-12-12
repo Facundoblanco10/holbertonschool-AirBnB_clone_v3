@@ -7,6 +7,7 @@ import json
 from models import storage
 from models.place import Place
 from models.review import Review
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews')
@@ -42,12 +43,16 @@ def review_delete(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=["POST"])
 def review_post(place_id):
     places = storage.all(Place).values()
+    users = storage.all(User).values()
+    users_ids = []
+    for user in users:
+        users_ids.append(user.id)
     for place in places:
         if place.id == place_id:
             try:
                 data = request.get_json()
                 if 'user_id' not in data:
-                    if data['user_id'] not in users:
+                    if data['user_id'] not in users_ids:
                         return make_response(jsonify({'Not user found'}), 404)
                     return make_response(
                         jsonify({'message': 'Missing user_id'}), 400)

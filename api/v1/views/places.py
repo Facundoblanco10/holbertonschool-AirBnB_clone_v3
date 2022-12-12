@@ -7,7 +7,7 @@ import json
 from models import storage
 from models.city import City
 from models.place import Place
-
+from models.user import User
 
 @app_views.route('/cities/<city_id>/places')
 def place_index(city_id):
@@ -42,16 +42,20 @@ def place_delete(place_id):
 @app_views.route('/cities/<city_id>/places', methods=["POST"])
 def place_post(city_id):
     cities = storage.all(City).values()
+    users = storage.all(User).values()
+    users_ids = []
     for city in cities:
         if city.id == city_id:
             try:
                 data = request.get_json()
                 if 'name' not in data:
                     return make_response(jsonify({'message': 'Missing name'}),
-                                            400)
+                                         400)
                 if 'user_id' not in data:
-                    return make_response(jsonify({'message': 'Missing user_id'}),
-                                            400)
+                    if data['user_id'] not in users_ids:
+                        return make_response(jsonify({'Not user found'}), 404)
+                    return make_response(
+                        jsonify({'message': 'Missing user_id'}), 400)
                 place = Place()
                 place.name = data['name']
                 place.user_id = data['user_id']
