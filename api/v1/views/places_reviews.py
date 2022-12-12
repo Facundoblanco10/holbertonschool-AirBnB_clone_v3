@@ -47,8 +47,8 @@ def review_post(place_id):
             try:
                 data = request.get_json()
                 if 'user_id' not in data:
-                    return make_response(jsonify({'message': 'Missing user_id'}),
-                                         400)
+                    return make_response(
+                        jsonify({'message': 'Missing user_id'}), 400)
                 if 'text' not in data:
                     return make_response(jsonify({'message': 'Missing text'}),
                                          400)                         
