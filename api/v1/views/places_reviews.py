@@ -55,6 +55,7 @@ def review_post(place_id):
                 review = Review()
                 review.user_id = data['user_id']
                 review.text = data['text']
+                review.place_id = place_id
                 storage.new(review)
                 storage.save()
                 return make_response(review.to_dict(), 201)
