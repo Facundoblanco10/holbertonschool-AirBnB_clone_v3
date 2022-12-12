@@ -54,11 +54,12 @@ def review_post(place_id):
                 if 'user_id' not in data:
                     return make_response(
                         jsonify({'message': 'Missing user_id'}), 400)
+                if data['user_id'] not in users_ids:
+                    return make_response(
+                        jsonify({'message': 'Not a user'}), 404)
                 if 'text' not in data:
                     return make_response(jsonify({'message': 'Missing text'}),
                                          400)
-                if data['user_id'] not in users_ids:
-                    return make_response(jsonify({'Not user found'}), 404)
                 review = Review()
                 review.user_id = data['user_id']
                 review.text = data['text']

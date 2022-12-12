@@ -58,7 +58,8 @@ def place_post(city_id):
                     return make_response(
                         jsonify({'message': 'Missing user_id'}), 400)
                 if data['user_id'] not in users_ids:
-                    return make_response(jsonify({'Not user found'}), 404)
+                    return make_response(
+                        jsonify({'message': 'Not a user'}), 404)
                 place = Place()
                 place.name = data['name']
                 place.user_id = data['user_id']
